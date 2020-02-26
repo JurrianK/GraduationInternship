@@ -13,7 +13,7 @@ namespace DataSetSerializationComparison
 
             // CSV parsing speed
             stopWatch.Start();
-            
+
             var csvParser = new CsvParser();
             var csvParserResults = csvParser.Parse("YieldCurve.csv");
 
@@ -26,7 +26,7 @@ namespace DataSetSerializationComparison
 
             // JSON parsing speed
             stopWatch.Start();
-            
+
             var jsonParser = new JsonParser();
             var jsonParserResults = jsonParser.Parse("YieldCurve.json");
 
@@ -36,7 +36,19 @@ namespace DataSetSerializationComparison
 
             Console.WriteLine($"JSON parsing took {elapsed.Minutes}:{elapsed.Seconds}:{elapsed.Milliseconds}");
 
-            Console.WriteLine("Hello World!");
+            stopWatch.Reset();
+            
+            // XLSX parsing speed
+            stopWatch.Start();
+            
+            var excelParser = new ExcelParser();
+            var excelParserResults = excelParser.Parse("YieldCurve.xlsx");
+
+            stopWatch.Stop();
+
+            elapsed = stopWatch.Elapsed;
+
+            Console.WriteLine($"XLSX parsing took {elapsed.Minutes}:{elapsed.Seconds}:{elapsed.Milliseconds}");
         }
     }
 }

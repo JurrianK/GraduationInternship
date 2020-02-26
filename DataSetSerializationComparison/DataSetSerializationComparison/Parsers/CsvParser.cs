@@ -37,12 +37,11 @@ namespace DataSetSerializationComparison.Parsers
                                     Value = Convert.ToDouble(lineContents[2], CultureInfo.InvariantCulture)
                                 });
                     }
-                    catch (Exception e)
+                    catch (Exception)
                     {
-                        break;
+                        throw;
                     }
                 }
-                
 
                 return yieldCurveContents;
             }

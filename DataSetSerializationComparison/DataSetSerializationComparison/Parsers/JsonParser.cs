@@ -32,7 +32,6 @@ namespace DataSetSerializationComparison.Parsers
                         var valueJsonElement = (JsonElement)item.GetValue(2);
 
                         var yearsToMaturity = yearsToMaturityJsonElement.GetInt32();
-                        // var term = DateTime.Parse(termJsonElement.GetInt32().ToString());
                         var value = valueJsonElement.GetDouble();
 
                         yieldCurveContents.Add(
