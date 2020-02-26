@@ -25,6 +25,11 @@ namespace DataSetSerializationComparison.Parsers
 
                 foreach (var csvLine in csvContentWithoutHeader)
                 {
+                    if (string.IsNullOrEmpty(csvLine))
+                    {
+                        continue;
+                    }
+
                     try
                     {
                         var lineContents = csvLine.Split(",");

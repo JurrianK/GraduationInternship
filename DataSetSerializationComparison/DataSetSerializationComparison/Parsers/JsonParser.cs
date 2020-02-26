@@ -32,6 +32,7 @@ namespace DataSetSerializationComparison.Parsers
                         var valueJsonElement = (JsonElement)item.GetValue(2);
 
                         var yearsToMaturity = yearsToMaturityJsonElement.GetInt32();
+                        var term = FromUnix(termJsonElement.GetRawText());
                         var value = valueJsonElement.GetDouble();
 
                         yieldCurveContents.Add(
@@ -51,6 +52,13 @@ namespace DataSetSerializationComparison.Parsers
 
                 return yieldCurveContents;
             }
+        }
+
+        private static DateTime FromUnix(string epoch)
+        {
+            var epochDateTime = new DateTime(1970, 1, 1, 0, 0, 0, DateTimeKind.Utc);
+
+            return epochDateTime.AddMilliseconds(Convert.ToDouble(epoch));
         }
 
         private class YieldCurveContainerClass
