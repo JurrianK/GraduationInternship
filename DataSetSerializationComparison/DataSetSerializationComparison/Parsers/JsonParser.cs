@@ -21,9 +21,9 @@ namespace DataSetSerializationComparison.Parsers
 
                 var jsonContent = streamReader.ReadToEnd();
 
-                var foo = JsonSerializer.Deserialize<YieldCurveContainerClass>(jsonContent);
+                var deserializedContainer = JsonSerializer.Deserialize<YieldCurveContainerClass>(jsonContent);
 
-                foreach (var item in foo.YieldCurveData)
+                foreach (var item in deserializedContainer.YieldCurveData)
                 {
                     try
                     {
