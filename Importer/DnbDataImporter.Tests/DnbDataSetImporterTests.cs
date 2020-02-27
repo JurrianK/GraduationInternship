@@ -1,4 +1,8 @@
-﻿using System.Threading.Tasks;
+﻿using System;
+
+using NSubstitute;
+
+using Shouldly;
 
 using Xunit;
 
@@ -6,17 +10,26 @@ namespace DnbDataImporter.Tests
 {
     public class DnbDataSetImporterTests
     {
-        [Fact]
-        public async Task Foo()
-        {
-            const string ResourceId = "60304cad-97ba-4974-a0ed-05597c91e37c";
+        private const string ResourceUrl = "DnbWebsiteUrl";
 
-            using (var dnbDataSetImporter = new DnbDataSetImporter())
-            {
-                var result = await dnbDataSetImporter
-                                 .LoadDataSet(ResourceId)
-                                 .ConfigureAwait(false);
-            }
+        [Fact]
+        public void LoadDataSet_WhenNullInputIsGivenToConstructor_ThrowsArgumentException()
+        {
+            // Arrange
+            var sut = new DnbDataSetImporter(null);
+
+            // Act and assert
+            Should.Throw<ArgumentException>(() => sut.LoadDataSet(Arg.Any<string>()));
+        }
+
+        [Fact]
+        public void LoadDataSet_WhenNullInputIsGivenAsResourceId_ThrowsArgumentNullException()
+        {
+            // Arrange
+            var sut = new DnbDataSetImporter(ResourceUrl);
+
+            // Act and assert
+            Should.Throw<ArgumentNullException>(() => sut.LoadDataSet(null));
         }
     }
 }

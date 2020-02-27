@@ -11,8 +11,13 @@ namespace DnbDataImporter.Mappers
     {
         public override IEnumerable<IDataRow> Map(string csvData)
         {
+            if (string.IsNullOrEmpty(csvData))
+            {
+                throw new ArgumentNullException(nameof(csvData));
+            }
+
             var csvDataWithoutHeader = RemoveHeader(csvData);
-            var yieldCurveDataPoints = new List<YieldCurveDataRow>();
+            var yieldCurveDataRows = new List<YieldCurveDataRow>();
 
             foreach (var dataPoint in csvDataWithoutHeader)
             {
@@ -28,7 +33,7 @@ namespace DnbDataImporter.Mappers
                     data[index] = data[index].Replace("\"", string.Empty);
                 }
 
-                yieldCurveDataPoints.Add(
+                yieldCurveDataRows.Add(
                     new YieldCurveDataRow
                         {
                             YearsToMaturity = Convert.ToInt32(data[0], CultureInfo.InvariantCulture),
@@ -37,7 +42,7 @@ namespace DnbDataImporter.Mappers
                         });
             }
 
-            return yieldCurveDataPoints;
+            return yieldCurveDataRows;
         }
     }
 }

@@ -12,20 +12,31 @@ namespace DnbDataImporter
 {
     public sealed class DnbDataSetImporter : IDisposable, IDnbDataSetImporter
     {
-        private const string ResourceUrl = "https://statistiek.api.dnb.nl/api/dataset/resourcecsv?id=";
-
+        private readonly string resourceUrl;
         private readonly HttpClient httpClient;
         private readonly SafeHandle handle = new SafeFileHandle(IntPtr.Zero, true);
 
         private bool disposed = false;
 
-        public DnbDataSetImporter()
+        public DnbDataSetImporter(string resourceUrl)
         {
+            this.resourceUrl = resourceUrl;
             this.httpClient = new HttpClient();
+        }
+
+        public DnbDataSetImporter(string resourceUrl, HttpClient httpClient)
+        {
+            this.resourceUrl = resourceUrl;
+            this.httpClient = httpClient;
         }
 
         public async Task<string> LoadDataSet(string resourceId)
         {
+            if (string.IsNullOrEmpty(this.resourceUrl))
+            {
+                throw new ArgumentException("Constructor was called with a null/empty resource url.");
+            }
+
             if (string.IsNullOrEmpty(resourceId))
             {
                 throw new ArgumentNullException(
@@ -33,26 +44,17 @@ namespace DnbDataImporter
                     $"{nameof(resourceId)} cannot be null.");
             }
 
-            try
+            var response = await this.httpClient
+                               .GetAsync($"{this.resourceUrl}{resourceId}")
+                               .ConfigureAwait(false);
+
+            response.EnsureSuccessStatusCode();
+
+            var contentStream = await response.Content.ReadAsStreamAsync().ConfigureAwait(false);
+
+            using (var streamReader = new StreamReader(contentStream))
             {
-                var response = await this.httpClient
-                                   .GetAsync($"{ResourceUrl}{resourceId}")
-                                   .ConfigureAwait(false);
-
-                response.EnsureSuccessStatusCode();
-
-                var contentStream = await response.Content
-                                 .ReadAsStreamAsync()
-                                 .ConfigureAwait(false);
-
-                using (var streamReader = new StreamReader(contentStream))
-                {
-                    return await streamReader.ReadToEndAsync().ConfigureAwait(false);
-                }
-            }
-            catch (HttpRequestException)
-            {
-                throw;
+                return await streamReader.ReadToEndAsync().ConfigureAwait(false);
             }
         }
 

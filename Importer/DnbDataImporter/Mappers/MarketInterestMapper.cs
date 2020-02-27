@@ -11,6 +11,11 @@ namespace DnbDataImporter.Mappers
     {
         public override IEnumerable<IDataRow> Map(string csvData)
         {
+            if (string.IsNullOrEmpty(csvData))
+            {
+                throw new ArgumentNullException(nameof(csvData));
+            }
+
             var csvDataWithoutHeader = RemoveHeader(csvData);
             var marketInterestDataRows = new List<MarketInterestDataRow>();
 

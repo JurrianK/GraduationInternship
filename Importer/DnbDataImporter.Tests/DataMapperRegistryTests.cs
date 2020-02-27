@@ -34,7 +34,7 @@ namespace DnbDataImporter.Tests
             var sut = new DataMapperRegistry();
 
             // Act and assert
-            Should.Throw(() => sut.GetMapper<YieldCurveDataRow>(), typeof(ArgumentNullException));
+            Should.Throw<ArgumentNullException>(() => sut.GetMapper<YieldCurveDataRow>());
         }
 
         [Fact]
