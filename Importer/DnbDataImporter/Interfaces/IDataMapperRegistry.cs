@@ -6,9 +6,10 @@ namespace DnbDataImporter.Interfaces
     public interface IDataMapperRegistry
     {
         void RegisterMapper<TDataRow, TDataMapper>()
-            where TDataRow : IDataRow;
+            where TDataRow : IDataRow
+            where TDataMapper : IDataMapper;
 
-        DataMapperBase GetMapper<TDataRow>()
+        IDataMapper GetMapper<TDataRow>()
             where TDataRow : IDataRow;
     }
 }

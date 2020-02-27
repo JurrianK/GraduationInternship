@@ -11,7 +11,7 @@ namespace DnbDataImporter.Tests
     public class DataMapperRegistryTests
     {
         [Fact]
-        public void RegisterMapper()
+        public void RegisterMapper_()
         {
 
         }

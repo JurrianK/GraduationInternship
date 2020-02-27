@@ -5,7 +5,7 @@ using DnbDataImporter.Models.Interfaces;
 
 namespace DnbDataImporter.Mappers
 {
-    public abstract class DataMapperBase
+    public abstract class DataMapperBase : IDataMapper
     {
         public abstract IEnumerable<IDataRow> Map(string csvData);
 

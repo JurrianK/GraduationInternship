@@ -18,11 +18,12 @@ namespace DnbDataImporter
 
         public void RegisterMapper<TDataRow, TDataMapper>()
             where TDataRow : IDataRow
+            where TDataMapper : IDataMapper
         {
-            this.mappingDictionary.TryAdd(typeof(TDataRow), typeof(DataMapperRegistry));
+            this.mappingDictionary.TryAdd(typeof(TDataRow), typeof(TDataMapper));
         }
 
-        public DataMapperBase GetMapper<TDataRow>()
+        public IDataMapper GetMapper<TDataRow>()
             where TDataRow : IDataRow
         {
             this.mappingDictionary.TryGetValue(typeof(TDataRow), out var result);
@@ -32,7 +33,7 @@ namespace DnbDataImporter
                 throw new ArgumentNullException($"{typeof(TDataRow).Name} has not been registered yet.");
             }
 
-            return (DataMapperBase)Activator.CreateInstance(result);
+            return (IDataMapper)Activator.CreateInstance(result);
         }
     }
 }
