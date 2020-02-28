@@ -12,27 +12,32 @@ namespace DnbDataImporter
 {
     public sealed class DnbDataSetImporter : IDisposable, IDnbDataSetImporter
     {
-        private readonly string resourceUrl;
+        private readonly string resourceBaseUrl;
         private readonly HttpClient httpClient;
         private readonly SafeHandle handle = new SafeFileHandle(IntPtr.Zero, true);
 
         private bool disposed = false;
 
-        public DnbDataSetImporter(string resourceUrl)
+        public DnbDataSetImporter(string resourceBaseUrl)
         {
-            this.resourceUrl = resourceUrl;
+            this.resourceBaseUrl = resourceBaseUrl;
             this.httpClient = new HttpClient();
         }
 
-        public DnbDataSetImporter(string resourceUrl, HttpClient httpClient)
+        public DnbDataSetImporter(string resourceBaseUrl, HttpClient httpClient)
         {
-            this.resourceUrl = resourceUrl;
+            this.resourceBaseUrl = resourceBaseUrl;
             this.httpClient = httpClient;
+        }
+
+        ~DnbDataSetImporter()
+        {
+            Dispose();
         }
 
         public async Task<string> LoadDataSet(string resourceId)
         {
-            if (string.IsNullOrEmpty(this.resourceUrl))
+            if (string.IsNullOrEmpty(this.resourceBaseUrl))
             {
                 throw new ArgumentException("Constructor was called with a null/empty resource url.");
             }
@@ -45,12 +50,14 @@ namespace DnbDataImporter
             }
 
             var response = await this.httpClient
-                               .GetAsync($"{this.resourceUrl}{resourceId}")
+                               .GetAsync($"{this.resourceBaseUrl}{resourceId}")
                                .ConfigureAwait(false);
 
             response.EnsureSuccessStatusCode();
 
-            var contentStream = await response.Content.ReadAsStreamAsync().ConfigureAwait(false);
+            var contentStream = await response.Content
+                                    .ReadAsStreamAsync()
+                                    .ConfigureAwait(false);
 
             using (var streamReader = new StreamReader(contentStream))
             {
@@ -63,7 +70,7 @@ namespace DnbDataImporter
             Dispose(true);
             GC.SuppressFinalize(this);
         }
-        
+
         private void Dispose(bool disposing)
         {
             if (this.disposed)

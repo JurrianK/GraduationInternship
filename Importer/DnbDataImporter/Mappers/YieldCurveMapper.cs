@@ -9,7 +9,7 @@ namespace DnbDataImporter.Mappers
 {
     public class YieldCurveMapper : DataMapperBase
     {
-        public override IEnumerable<IDataRow> Map(string csvData)
+        public override IEnumerable<IDataSequence> Map(string csvData)
         {
             if (string.IsNullOrEmpty(csvData))
             {
@@ -17,7 +17,7 @@ namespace DnbDataImporter.Mappers
             }
 
             var csvDataWithoutHeader = RemoveHeader(csvData);
-            var yieldCurveDataRows = new List<YieldCurveDataRow>();
+            var yieldCurveDataSequences = new List<YieldCurveDataSequence>();
 
             foreach (var dataPoint in csvDataWithoutHeader)
             {
@@ -33,8 +33,8 @@ namespace DnbDataImporter.Mappers
                     data[index] = data[index].Replace("\"", string.Empty);
                 }
 
-                yieldCurveDataRows.Add(
-                    new YieldCurveDataRow
+                yieldCurveDataSequences.Add(
+                    new YieldCurveDataSequence
                         {
                             YearsToMaturity = Convert.ToInt32(data[0], CultureInfo.InvariantCulture),
                             Term = DateTime.Parse(data[1], CultureInfo.InvariantCulture),
@@ -42,7 +42,7 @@ namespace DnbDataImporter.Mappers
                         });
             }
 
-            return yieldCurveDataRows;
+            return yieldCurveDataSequences;
         }
     }
 }

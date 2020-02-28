@@ -12,73 +12,70 @@ namespace DnbDataImporter.Tests
     public class DataMapperRegistryTests
     {
         [Fact]
-        public void RegisterMapper_WhenSameDataRowIsAddedTwiceWithDifferentMappers_ReturnsFirstRegisteredMapper()
+        public void RegisterMapper_WhenSameDataSequenceIsAddedTwiceWithDifferentMappers_ThSequencesArgumentException()
         {
             // Arrange
             var sut = new DataMapperRegistry();
 
             // Act
-            sut.RegisterMapper<YieldCurveDataRow, YieldCurveMapper>();
-            sut.RegisterMapper<YieldCurveDataRow, MarketInterestMapper>();
-
-            var result = sut.GetMapper<YieldCurveDataRow>();
+            sut.RegisterMapper<YieldCurveDataSequence, YieldCurveMapper>();
 
             // Assert
-            result.ShouldBeOfType<YieldCurveMapper>();
+            Should.Throw<ArgumentException>(() => sut.RegisterMapper<YieldCurveDataSequence, MarketInterestMapper>());
         }
 
         [Fact]
-        public void GetMapper_WhenNoDataRowHasBeenRegistered_ThrowsArgumentNullException()
+        public void GetMapper_WhenNoDataSequenceHasBeenRegistered_ThrowsArgumentException()
         {
             // Arrange
             var sut = new DataMapperRegistry();
 
             // Act and assert
-            Should.Throw<ArgumentNullException>(() => sut.GetMapper<YieldCurveDataRow>());
+            Should.Throw<ArgumentException>(() => sut.GetMapper<YieldCurveDataSequence>());
         }
 
         [Fact]
-        public void GetMapper_WhenRegisteringYieldCurveDataRowAndMapper_ReturnsExpectedMapper()
+        public void GetMapper_WhenRegisteringYieldCurveDataSequenceAndMapper_ReturnsExpectedMapper()
         {
             // Arrange
             var sut = new DataMapperRegistry();
 
-            sut.RegisterMapper<YieldCurveDataRow, YieldCurveMapper>();
+            sut.RegisterMapper<YieldCurveDataSequence, YieldCurveMapper>();
 
             // Act
-            var result = sut.GetMapper<YieldCurveDataRow>();
+            var result = sut.GetMapper<YieldCurveDataSequence>();
 
             // Assert
             result.ShouldBeOfType<YieldCurveMapper>();
         }
 
         [Fact]
-        public void GetMapper_WhenRegisteringMarketInterestDataRowAndMapper_ReturnsExpectedMapper()
+        public void GetMapper_WhenRegisteringMarketInterestDataSequenceAndMapper_ReturnsExpectedMapper()
         {
             // Arrange
             var sut = new DataMapperRegistry();
 
-            sut.RegisterMapper<MarketInterestDataRow, MarketInterestMapper>();
+            sut.RegisterMapper<MarketInterestDataSequence, MarketInterestMapper>();
 
             // Act
-            var result = sut.GetMapper<MarketInterestDataRow>();
+            var result = sut.GetMapper<MarketInterestDataSequence>();
 
             // Assert
             result.ShouldBeOfType<MarketInterestMapper>();
         }
 
         [Fact]
-        public void GetMapper_WhenRegisteringMultipleDataRowsAndMappers_ReturnsDifferentMappersForDifferentRows()
+        public void GetMapper_WhenRegisteringMultipleDataSequencesAndMappers_ReturnsDifferentMappersForDifferentSequences()
         {
             // Arrange
             var sut = new DataMapperRegistry();
 
-            sut.RegisterMapper<YieldCurveDataRow, YieldCurveMapper>();
-            sut.RegisterMapper<MarketInterestDataRow, MarketInterestMapper>();
+            sut.RegisterMapper<YieldCurveDataSequence, YieldCurveMapper>();
+            sut.RegisterMapper<MarketInterestDataSequence, MarketInterestMapper>();
 
             // Act
-            var yieldCurveMapper = sut.GetMapper<YieldCurveDataRow>();
-            var marketInterestMapper = sut.GetMapper<MarketInterestDataRow>();
+            var yieldCurveMapper = sut.GetMapper<YieldCurveDataSequence>();
+            var marketInterestMapper = sut.GetMapper<MarketInterestDataSequence>();
 
             // Assert
             yieldCurveMapper.ShouldBeOfType<YieldCurveMapper>();

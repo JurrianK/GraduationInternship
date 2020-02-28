@@ -1,6 +1,6 @@
 ﻿namespace DnbDataImporter.Models.Interfaces
 {
-    public interface IDataRow
+    public interface IDataSequence
     {
     }
 }

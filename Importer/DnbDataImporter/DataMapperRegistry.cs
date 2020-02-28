@@ -16,21 +16,26 @@ namespace DnbDataImporter
             this.mappingDictionary = new Dictionary<Type, Type>();
         }
 
-        public void RegisterMapper<TDataRow, TDataMapper>()
-            where TDataRow : IDataRow
+        public void RegisterMapper<TDataSequence, TDataMapper>()
+            where TDataSequence : IDataSequence
             where TDataMapper : IDataMapper
         {
-            this.mappingDictionary.TryAdd(typeof(TDataRow), typeof(TDataMapper));
+            var successfulRegistration = this.mappingDictionary.TryAdd(typeof(TDataSequence), typeof(TDataMapper));
+
+            if (!successfulRegistration)
+            {
+                throw new ArgumentException($"{typeof(TDataSequence)} has already been registered.");
+            }
         }
 
-        public IDataMapper GetMapper<TDataRow>()
-            where TDataRow : IDataRow
+        public IDataMapper GetMapper<TDataSequence>()
+            where TDataSequence : IDataSequence
         {
-            this.mappingDictionary.TryGetValue(typeof(TDataRow), out var result);
+            this.mappingDictionary.TryGetValue(typeof(TDataSequence), out var result);
 
             if (result == null)
             {
-                throw new ArgumentNullException($"{typeof(TDataRow).Name} has not been registered yet.");
+                throw new ArgumentException($"{typeof(TDataSequence)} has not been registered yet.");
             }
 
             return (IDataMapper)Activator.CreateInstance(result);

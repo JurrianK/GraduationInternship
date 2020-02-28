@@ -6,6 +6,6 @@ namespace DnbDataImporter.Mappers
 {
     public interface IDataMapper
     {
-        IEnumerable<IDataRow> Map(string csvData);
+        IEnumerable<IDataSequence> Map(string csvData);
     }
 }

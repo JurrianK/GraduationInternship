@@ -5,11 +5,11 @@ namespace DnbDataImporter.Interfaces
 {
     public interface IDataMapperRegistry
     {
-        void RegisterMapper<TDataRow, TDataMapper>()
-            where TDataRow : IDataRow
+        void RegisterMapper<TDataSequence, TDataMapper>()
+            where TDataSequence : IDataSequence
             where TDataMapper : IDataMapper;
 
-        IDataMapper GetMapper<TDataRow>()
-            where TDataRow : IDataRow;
+        IDataMapper GetMapper<TDataSequence>()
+            where TDataSequence : IDataSequence;
     }
 }

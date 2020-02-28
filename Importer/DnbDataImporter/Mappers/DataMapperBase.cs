@@ -7,7 +7,7 @@ namespace DnbDataImporter.Mappers
 {
     public abstract class DataMapperBase : IDataMapper
     {
-        public abstract IEnumerable<IDataRow> Map(string csvData);
+        public abstract IEnumerable<IDataSequence> Map(string csvData);
 
         protected static IEnumerable<string> RemoveHeader(string csvData)
         {

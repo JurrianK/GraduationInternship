@@ -4,7 +4,7 @@ using DnbDataImporter.Models.Interfaces;
 
 namespace DnbDataImporter.Models
 {
-    public class YieldCurveDataRow : IDataRow
+    public class YieldCurveDataSequence : IDataSequence
     {
         public int YearsToMaturity { get; set; }
 

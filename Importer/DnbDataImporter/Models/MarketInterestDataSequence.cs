@@ -4,7 +4,7 @@ using DnbDataImporter.Models.Interfaces;
 
 namespace DnbDataImporter.Models
 {
-    public class MarketInterestDataRow : IDataRow
+    public class MarketInterestDataSequence : IDataSequence
     {
         public string MarketRate { get; set; }
 

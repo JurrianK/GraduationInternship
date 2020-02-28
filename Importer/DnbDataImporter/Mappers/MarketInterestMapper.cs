@@ -9,7 +9,7 @@ namespace DnbDataImporter.Mappers
 {
     public class MarketInterestMapper : DataMapperBase
     {
-        public override IEnumerable<IDataRow> Map(string csvData)
+        public override IEnumerable<IDataSequence> Map(string csvData)
         {
             if (string.IsNullOrEmpty(csvData))
             {
@@ -17,7 +17,7 @@ namespace DnbDataImporter.Mappers
             }
 
             var csvDataWithoutHeader = RemoveHeader(csvData);
-            var marketInterestDataRows = new List<MarketInterestDataRow>();
+            var marketInterestDataSequences = new List<MarketInterestDataSequence>();
 
             foreach (var dataPoint in csvDataWithoutHeader)
             {
@@ -33,8 +33,8 @@ namespace DnbDataImporter.Mappers
                     data[index] = data[index].Replace("\"", string.Empty);
                 }
 
-                marketInterestDataRows.Add(
-                    new MarketInterestDataRow
+                marketInterestDataSequences.Add(
+                    new MarketInterestDataSequence
                         {
                             MarketRate = data[0],
                             MarketRateKind = data[1],
@@ -45,7 +45,7 @@ namespace DnbDataImporter.Mappers
                         });
             }
 
-            return marketInterestDataRows;
+            return marketInterestDataSequences;
         }
     }
 }
