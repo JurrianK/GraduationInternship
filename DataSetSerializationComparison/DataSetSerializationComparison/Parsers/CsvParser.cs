@@ -20,7 +20,7 @@ namespace DataSetSerializationComparison.Parsers
                 }
 
                 var csvContent = streamReader.ReadToEnd();
-
+                
                 var csvContentWithoutHeader = RemoveHeaderFromCsvFile(csvContent);
 
                 foreach (var csvLine in csvContentWithoutHeader)

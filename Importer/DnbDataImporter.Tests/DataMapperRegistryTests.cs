@@ -12,7 +12,7 @@ namespace DnbDataImporter.Tests
     public class DataMapperRegistryTests
     {
         [Fact]
-        public void RegisterMapper_WhenSameDataSequenceIsAddedTwiceWithDifferentMappers_ThSequencesArgumentException()
+        public void RegisterMapper_WhenSameDataSequenceIsAddedTwiceWithDifferentMappers_ThrowsArgumentException()
         {
             // Arrange
             var sut = new DataMapperRegistry();
