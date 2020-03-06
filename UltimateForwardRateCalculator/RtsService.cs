@@ -14,7 +14,7 @@ namespace UltimateForwardRateCalculator
 
             var rtsWithUfr = GetYieldCurveWithUfr(forwardRtsWithUfr, helpTable);
 
-            var originalYieldCurve = Data.YieldCurveWithUfr.Values.ToList();
+            var originalYieldCurve = Data.OriginalYieldCurve.Values.ToList();
 
             originalYieldCurve.AddRange(rtsWithUfr);
 

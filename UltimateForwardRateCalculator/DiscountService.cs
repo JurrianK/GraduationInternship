@@ -9,7 +9,7 @@ namespace UltimateForwardRateCalculator
         public static IEnumerable<double> CalculateDiscountedRts()
         {
             var discountedRts = new List<double> { 0.500 };
-            var rts = RtsService.GetYieldCurveWithUfr(Data.YieldCurveWithUfr);
+            var rts = RtsService.GetYieldCurveWithUfr(Data.OriginalYieldCurve);
 
             for (var index = 0; index < rts.Count(); index++)
             {
@@ -26,7 +26,7 @@ namespace UltimateForwardRateCalculator
 
         public static IEnumerable<double> CalculateDiscountedRtsDown()
         {
-            var rts = RtsService.GetYieldCurveWithUfr(Data.YieldCurveWithUfr);
+            var rts = RtsService.GetYieldCurveWithUfr(Data.OriginalYieldCurve);
             var downwardsShockPerMaturity = InterestShockService.GetDownwardsShockPerMaturity(rts, Data.CashFlows.Count());
 
             var discountedRtsDown = new List<double> { 0.500 };
@@ -46,7 +46,7 @@ namespace UltimateForwardRateCalculator
 
         public static IEnumerable<double> CalculateDiscountedRtsUp()
         {
-            var rts = RtsService.GetYieldCurveWithUfr(Data.YieldCurveWithUfr);
+            var rts = RtsService.GetYieldCurveWithUfr(Data.OriginalYieldCurve);
             var upwardsShockPerMaturity = InterestShockService.GetUpwardsShockPerMaturity(rts, Data.CashFlows.Count());
 
             var discountedRtsUp = new List<double> { 0.500 };

@@ -5,9 +5,7 @@ namespace UltimateForwardRateCalculator
 {
     public static class ShockEffectService
     {
-        public static double CalculateInitialShock(
-            IEnumerable<double> cashFlows, 
-            IEnumerable<double> discountedRts)
+        public static double CalculateInitialShock(IEnumerable<double> cashFlows, IEnumerable<double> discountedRts)
         {
             var initialShock = 0.00;
 
@@ -21,9 +19,7 @@ namespace UltimateForwardRateCalculator
             return initialShock;
         }
 
-        public static double CalculateRtsDownShock(
-            IEnumerable<double> cashFlows, 
-            IEnumerable<double> discountedRtsDown)
+        public static double CalculateRtsDownShock(IEnumerable<double> cashFlows, IEnumerable<double> discountedRtsDown)
         {
             var rtsDownShock = 0.00;
 
@@ -37,9 +33,7 @@ namespace UltimateForwardRateCalculator
             return rtsDownShock;
         }
 
-        public static double CalculateRtsUpShock(
-            IEnumerable<double> cashFlows, 
-            IEnumerable<double> discountedRtsUp)
+        public static double CalculateRtsUpShock(IEnumerable<double> cashFlows, IEnumerable<double> discountedRtsUp)
         {
             var rtsUpShock = 0.00;
 

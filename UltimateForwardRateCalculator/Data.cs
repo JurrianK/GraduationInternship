@@ -259,7 +259,7 @@ namespace UltimateForwardRateCalculator
                     { 60, 1.32 }
                 };
 
-        public static IDictionary<int, double> YieldCurveWithUfr =>
+        public static IDictionary<int, double> OriginalYieldCurve =>
             new Dictionary<int, double>
                 {
                     { 1, -0.324 },
