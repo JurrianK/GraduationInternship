@@ -4,7 +4,7 @@ namespace InterpolationVisualization.Services
 {
     public static class Data
     {
-        public static IDictionary<int, double> OriginalYieldCurve =>
+        public static IDictionary<int, double> YieldCurve =>
             new Dictionary<int, double>
                 {
                     { 1, -0.324 },

@@ -6,10 +6,12 @@ namespace UltimateForwardRateCalculator
 {
     public static class RtsService
     {
+        private const double UfrPercentage = 0.021;
+
         public static IEnumerable<double> GetYieldCurveWithUfr(IDictionary<int, double> yieldCurve)
         {
             var forwardRtsWithUfr = GetForwardRtsWithUfr(yieldCurve);
-            var extendedForwardRtsWithUfr = ExtendForwardRtsWithUfr(forwardRtsWithUfr, 40, 0.021);
+            var extendedForwardRtsWithUfr = ExtendForwardRtsWithUfr(forwardRtsWithUfr, 40, UfrPercentage);
             var helpTable = CalculateHelpTable(extendedForwardRtsWithUfr);
 
             var rtsWithUfr = GetYieldCurveWithUfr(forwardRtsWithUfr, helpTable);
