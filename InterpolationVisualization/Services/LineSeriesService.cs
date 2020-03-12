@@ -9,7 +9,9 @@ namespace InterpolationVisualization.Services
 {
     public static class LineSeriesService
     {
-        private static readonly int AmountToTake = Data.YieldCurve.Count;
+        private const int AmountToTake = 5;
+
+        private const double StepSize = 1.00 / 2.00;
 
         public static ChartValues<double> GetCubicSplineInterpolation()
         {
@@ -19,7 +21,9 @@ namespace InterpolationVisualization.Services
 
             IInterpolation interpolator = CubicSpline.InterpolateNatural(keys, yieldCurve.Values);
 
-            return InterpolateChartValues(interpolator);
+            var interpolatedResult = Interpolate(interpolator);
+
+            return interpolatedResult;
         }
 
         public static ChartValues<double> GetDnbYieldCurve()
@@ -28,9 +32,9 @@ namespace InterpolationVisualization.Services
 
             var chartValues = new ChartValues<double>();
 
-            for (var index = 0.00; index < AmountToTake; index += 0.50)
+            for (var index = 0.00; index < AmountToTake; index += StepSize)
             {
-                chartValues.Add(index % 1 == 0 ? yieldCurve.Values.ElementAt((int)index) : double.NaN);
+                chartValues.Add(Math.Abs(index % 1.00) < 0.1 ? yieldCurve.Values.ElementAt((int)index) : double.NaN);
             }
 
             return chartValues;
@@ -44,7 +48,9 @@ namespace InterpolationVisualization.Services
 
             IInterpolation interpolator = LinearSpline.Interpolate(keys, yieldCurve.Values);
 
-            return InterpolateChartValues(interpolator);
+            var interpolatedResult = Interpolate(interpolator);
+
+            return interpolatedResult;
         }
 
         public static ChartValues<double> GetLogLinearInterpolation()
@@ -55,7 +61,9 @@ namespace InterpolationVisualization.Services
 
             IInterpolation interpolator = LogLinear.Interpolate(keys, yieldCurve.Values);
 
-            return InterpolateChartValues(interpolator);
+            var interpolatedResult = Interpolate(interpolator);
+
+            return interpolatedResult;
         }
 
         public static ChartValues<double> GetPolynomialEquidistantInterpolation()
@@ -64,16 +72,18 @@ namespace InterpolationVisualization.Services
 
             var keys = yieldCurve.Select(x => Convert.ToDouble(x.Key));
 
-            IInterpolation interpolator = Barycentric.InterpolateRationalFloaterHormann(keys, yieldCurve.Values);
+            IInterpolation interpolator = Barycentric.InterpolatePolynomialEquidistant(keys, yieldCurve.Values);
 
-            return InterpolateChartValues(interpolator);
+            var interpolatedResult = Interpolate(interpolator);
+
+            return interpolatedResult;
         }
 
-        private static ChartValues<double> InterpolateChartValues(IInterpolation interpolator)
+        private static ChartValues<double> Interpolate(IInterpolation interpolator)
         {
             var chartValues = new ChartValues<double>();
 
-            for (var index = 1.00; index < AmountToTake + 0.50; index += 0.50)
+            for (var index = (double)Data.YieldCurve.Keys.First(); index <= AmountToTake; index += StepSize)
             {
                 chartValues.Add(interpolator.Interpolate(index));
             }

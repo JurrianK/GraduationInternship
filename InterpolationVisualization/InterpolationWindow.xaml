@@ -14,23 +14,23 @@
         HorizontalContentAlignment="Stretch"
         Margin="0">
     <UserControl.Resources>
-        <BooleanToVisibilityConverter x:Key="Bvc"></BooleanToVisibilityConverter>
-        <zoomingAndPanning:ZoomingModeConverter x:Key="ZoomingModeConverter"></zoomingAndPanning:ZoomingModeConverter>
+        <BooleanToVisibilityConverter x:Key="Bvc" />
+        <zoomingAndPanning:ZoomingModeConverter x:Key="ZoomingModeConverter" />
     </UserControl.Resources>
 
     <Grid HorizontalAlignment="Stretch" VerticalAlignment="Stretch">
         <Grid.ColumnDefinitions>
-            <ColumnDefinition Width="1500"></ColumnDefinition>
+            <ColumnDefinition Width="1500" />
         </Grid.ColumnDefinitions>
 
         <Grid.RowDefinitions>
-            <RowDefinition Height="Auto"></RowDefinition>
-            <RowDefinition Height="*"></RowDefinition>
+            <RowDefinition Height="Auto" />
+            <RowDefinition Height="*" />
         </Grid.RowDefinitions>
 
         <StackPanel Grid.Column="0" Grid.Row="0" Orientation="Horizontal">
             <Button Click="ToggleZoomingMode">
-                <TextBlock>Toggle zooming mode, current is: 
+                <TextBlock>Zooming on axis: 
                     <TextBlock Text="{Binding ZoomingMode, Converter={StaticResource ZoomingModeConverter}}"/>
                 </TextBlock>
             </Button>
@@ -42,7 +42,7 @@
             <CheckBox IsChecked="{Binding PolynomialInterpolationVisibility}">Polynomial interpolated</CheckBox>
         </StackPanel>
 
-        <lvc:CartesianChart Grid.Column="0" Grid.Row="1" LegendLocation="Right" Zoom="{Binding ZoomingMode}" DisableAnimations="True">
+        <lvc:CartesianChart Grid.Column="0" Grid.Row="1" LegendLocation="Right" Zoom="{Binding ZoomingMode}" DisableAnimations="True" Hoverable="False">
             <lvc:CartesianChart.AxisX>
                 <lvc:Axis Title="Maturity (half years)" />
             </lvc:CartesianChart.AxisX>
