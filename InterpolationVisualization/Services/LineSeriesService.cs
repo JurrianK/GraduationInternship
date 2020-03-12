@@ -21,9 +21,7 @@ namespace InterpolationVisualization.Services
 
             IInterpolation interpolator = CubicSpline.InterpolateNatural(keys, yieldCurve.Values);
 
-            var interpolatedResult = Interpolate(interpolator);
-
-            return interpolatedResult;
+            return Interpolate(interpolator);
         }
 
         public static ChartValues<double> GetDnbYieldCurve()
@@ -48,9 +46,7 @@ namespace InterpolationVisualization.Services
 
             IInterpolation interpolator = LinearSpline.Interpolate(keys, yieldCurve.Values);
 
-            var interpolatedResult = Interpolate(interpolator);
-
-            return interpolatedResult;
+            return Interpolate(interpolator);
         }
 
         public static ChartValues<double> GetLogLinearInterpolation()
@@ -61,9 +57,7 @@ namespace InterpolationVisualization.Services
 
             IInterpolation interpolator = LogLinear.Interpolate(keys, yieldCurve.Values);
 
-            var interpolatedResult = Interpolate(interpolator);
-
-            return interpolatedResult;
+            return Interpolate(interpolator);
         }
 
         public static ChartValues<double> GetPolynomialEquidistantInterpolation()
@@ -74,9 +68,7 @@ namespace InterpolationVisualization.Services
 
             IInterpolation interpolator = Barycentric.InterpolatePolynomialEquidistant(keys, yieldCurve.Values);
 
-            var interpolatedResult = Interpolate(interpolator);
-
-            return interpolatedResult;
+            return Interpolate(interpolator);
         }
 
         private static ChartValues<double> Interpolate(IInterpolation interpolator)
