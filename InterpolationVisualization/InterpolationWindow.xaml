@@ -40,6 +40,7 @@
             <CheckBox IsChecked="{Binding LinearSplineInterpolationVisibility}">Linear spline interpolated</CheckBox>
             <CheckBox IsChecked="{Binding LogLinearInterpolationVisibility}">Log linear interpolated</CheckBox>
             <CheckBox IsChecked="{Binding PolynomialInterpolationVisibility}">Polynomial interpolated</CheckBox>
+            <!--<CheckBox IsChecked="{Binding StepInterpolationVisibility}">Step interpolated</CheckBox>-->
         </StackPanel>
 
         <lvc:CartesianChart Grid.Column="0" Grid.Row="1" LegendLocation="Right" Zoom="{Binding ZoomingMode}" DisableAnimations="True" Hoverable="False">
@@ -53,10 +54,11 @@
 
             <lvc:CartesianChart.Series>
                 <lvc:LineSeries Title="DNB Curve" Values="{Binding DnbCurveValues}" Visibility="{Binding DnbCurveVisibility, Converter={StaticResource Bvc}}" />
-                <lvc:LineSeries Title="Polynomial interpolated curve" PointGeometry="{x:Static lvc:DefaultGeometries.None}" Values="{Binding PolynomialInterpolationValues}" Visibility="{Binding PolynomialInterpolationVisibility, Converter={StaticResource Bvc}}" />
-                <lvc:LineSeries Title="Cubic spline interpolated curve" PointGeometry="{x:Static lvc:DefaultGeometries.None}" Values="{Binding CubicSplineInterpolationValues}" Visibility="{Binding CubicSplineInterpolationVisibility, Converter={StaticResource Bvc}}" />
-                <lvc:LineSeries Title="Linear spline interpolated curve" PointGeometry="{x:Static lvc:DefaultGeometries.None}" Values="{Binding LinearSplineInterpolationValues}" Visibility="{Binding LinearSplineInterpolationVisibility, Converter={StaticResource Bvc}}" />
-                <lvc:LineSeries Title="Log linear interpolated curve" PointGeometry="{x:Static lvc:DefaultGeometries.None}" Values="{Binding LogLinearInterpolationValues}" Visibility="{Binding LogLinearInterpolationVisibility, Converter={StaticResource Bvc}}" />
+                <lvc:LineSeries Title="Polynomial interpolated curve" LineSmoothness="0.00" PointGeometry="{x:Static lvc:DefaultGeometries.None}" Values="{Binding PolynomialInterpolationValues}" Visibility="{Binding PolynomialInterpolationVisibility, Converter={StaticResource Bvc}}" />
+                <lvc:LineSeries Title="Cubic spline interpolated curve" LineSmoothness="0.00" PointGeometry="{x:Static lvc:DefaultGeometries.None}" Values="{Binding CubicSplineInterpolationValues}" Visibility="{Binding CubicSplineInterpolationVisibility, Converter={StaticResource Bvc}}" />
+                <lvc:LineSeries Title="Linear spline interpolated curve" LineSmoothness="0.00" PointGeometry="{x:Static lvc:DefaultGeometries.None}" Values="{Binding LinearSplineInterpolationValues}" Visibility="{Binding LinearSplineInterpolationVisibility, Converter={StaticResource Bvc}}" />
+                <lvc:LineSeries Title="Log linear interpolated curve" LineSmoothness="0.00" PointGeometry="{x:Static lvc:DefaultGeometries.None}" Values="{Binding LogLinearInterpolationValues}" Visibility="{Binding LogLinearInterpolationVisibility, Converter={StaticResource Bvc}}" />
+                <lvc:LineSeries Title="Step interpolated curve" LineSmoothness="0.00" PointGeometry="{x:Static lvc:DefaultGeometries.None}" Values="{Binding StepInterpolationValues}" Visibility="{Binding StepInterpolationVisibility, Converter={StaticResource Bvc}}" />
             </lvc:CartesianChart.Series>
         </lvc:CartesianChart>
     </Grid>

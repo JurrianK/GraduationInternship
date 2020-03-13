@@ -16,6 +16,7 @@ namespace InterpolationVisualization
         private bool dnbCurveVisibility;
         private bool logLinearVisibility;
         private bool polynomialInterpolationVisibility;
+        private bool stepInterpolationVisibility;
 
         private ZoomingOptions zoomingMode;
 
@@ -29,6 +30,7 @@ namespace InterpolationVisualization
             this.dnbCurveVisibility = true;
             this.logLinearVisibility = false;
             this.polynomialInterpolationVisibility = false;
+            this.stepInterpolationVisibility = false;
 
             this.DataContext = this;
         }
@@ -90,6 +92,18 @@ namespace InterpolationVisualization
             {
                 this.polynomialInterpolationVisibility = value;
                 OnPropertyChanged(nameof(this.PolynomialInterpolationVisibility));
+            }
+        }
+
+        public ChartValues<double> StepInterpolationValues => LineSeriesService.GetStepInterpolation();
+
+        public bool StepInterpolationVisibility
+        {
+            get => this.stepInterpolationVisibility;
+            set
+            {
+                this.stepInterpolationVisibility = value;
+                OnPropertyChanged(nameof(this.StepInterpolationVisibility));
             }
         }
 

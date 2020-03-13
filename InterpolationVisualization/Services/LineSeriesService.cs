@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Collections.Generic;
 using System.Linq;
 
 using LiveCharts;
@@ -9,13 +10,15 @@ namespace InterpolationVisualization.Services
 {
     public static class LineSeriesService
     {
-        private const int AmountToTake = 5;
+        private const double StepSize = 1.00;
 
-        private const double StepSize = 1.00 / 2.00;
+        private static readonly int AmountToTake = Data.YieldCurve.Count;
+
+        private static readonly IDictionary<int, double> YieldCurve = Data.PartialYieldCurve;
 
         public static ChartValues<double> GetCubicSplineInterpolation()
         {
-            var yieldCurve = Data.YieldCurve;
+            var yieldCurve = YieldCurve;
 
             var keys = yieldCurve.Select(x => Convert.ToDouble(x.Key));
 
@@ -40,7 +43,7 @@ namespace InterpolationVisualization.Services
 
         public static ChartValues<double> GetLinearSplineInterpolation()
         {
-            var yieldCurve = Data.YieldCurve;
+            var yieldCurve = YieldCurve;
 
             var keys = yieldCurve.Select(x => Convert.ToDouble(x.Key));
 
@@ -51,7 +54,7 @@ namespace InterpolationVisualization.Services
 
         public static ChartValues<double> GetLogLinearInterpolation()
         {
-            var yieldCurve = Data.YieldCurve;
+            var yieldCurve = YieldCurve;
 
             var keys = yieldCurve.Select(x => Convert.ToDouble(x.Key));
 
@@ -62,11 +65,22 @@ namespace InterpolationVisualization.Services
 
         public static ChartValues<double> GetPolynomialEquidistantInterpolation()
         {
-            var yieldCurve = Data.YieldCurve;
+            var yieldCurve = YieldCurve;
 
             var keys = yieldCurve.Select(x => Convert.ToDouble(x.Key));
 
             IInterpolation interpolator = Barycentric.InterpolatePolynomialEquidistant(keys, yieldCurve.Values);
+
+            return Interpolate(interpolator);
+        }
+
+        public static ChartValues<double> GetStepInterpolation()
+        {
+            var yieldCurve = YieldCurve;
+
+            var keys = yieldCurve.Select(x => Convert.ToDouble(x.Key));
+
+            IInterpolation interpolator = StepInterpolation.Interpolate(keys, yieldCurve.Values);
 
             return Interpolate(interpolator);
         }
