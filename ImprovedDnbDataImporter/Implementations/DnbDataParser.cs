@@ -27,11 +27,6 @@ namespace ImprovedDnbDataImporter.Implementations
             {
                 var rowSplit = SplitInParts(",", row);
 
-                if (rowSplit.Length < 3)
-                {
-                    continue;
-                }
-
                 var maturityInYears = int.Parse(rowSplit[0], CultureInfo.InvariantCulture);
                 var term = DateTime.Parse(rowSplit[1], CultureInfo.InvariantCulture);
                 var value = decimal.Parse(rowSplit[2], CultureInfo.InvariantCulture);
@@ -49,7 +44,7 @@ namespace ImprovedDnbDataImporter.Implementations
 
         private static string[] SplitInParts(string separator, string data)
         {
-            return data.Split(separator);
+            return data.Split(separator, StringSplitOptions.RemoveEmptyEntries);
         }
     }
 }
