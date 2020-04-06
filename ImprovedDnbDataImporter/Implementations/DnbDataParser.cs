@@ -11,7 +11,7 @@ namespace ImprovedDnbDataImporter.Implementations
     public class DnbDataParser : IDnbDataParser
     {
         public IReadOnlyCollection<InterestRateTermStructure> Parse(string data)
-        {
+        {   
             var separatedContents = SplitInParts("\n", data);
 
             var separatedContentsWithoutHeader = RemoveHeader(separatedContents);

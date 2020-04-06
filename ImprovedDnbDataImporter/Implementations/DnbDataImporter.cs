@@ -24,6 +24,11 @@ namespace ImprovedDnbDataImporter.Implementations
             this.httpClient = new HttpClient();
         }
 
+        public DnbDataImporter(HttpClient httpClient)
+        {
+            this.httpClient = httpClient;
+        }
+
         public async Task<string> Import(string csvResourceId)
         {
             var asyncResult = await this.httpClient
