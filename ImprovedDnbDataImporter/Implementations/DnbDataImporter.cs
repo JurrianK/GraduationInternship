@@ -30,6 +30,8 @@ namespace ImprovedDnbDataImporter.Implementations
                 .GetAsync(DnbStatisticsApiBaseUrl + csvResourceId)
                 .ConfigureAwait(false);
 
+            asyncResult.EnsureSuccessStatusCode();
+
             return await asyncResult.Content
                 .ReadAsStringAsync()
                 .ConfigureAwait(false);
